@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_gravity="start"
+    android:orientation="vertical"
+    android:layout_width="360dp"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@drawable/background">
+    <!--clickable로 하위 뷰 클릭 방어 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/album"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/island"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="노래를 선택하세요"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/album"
+            app:layout_constraintStart_toStartOf="@+id/album"
+            app:layout_constraintTop_toBottomOf="@+id/album" />
+
+        <ImageView
+            android:id="@+id/thumbUp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_star_outline_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:gravity="center"
+        android:background="#A164B5F6"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/repeat"
+                android:layout_width="65dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/ic_baseline_repeat_24" />
+
+            <ImageView
+                android:id="@+id/pre"
+                android:layout_width="65dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_skip_previous_24" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="65dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_play_arrow_24" />
+
+            <ImageView
+                android:id="@+id/pause"
+                android:layout_width="65dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_pause_24" />
+
+
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="65dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_skip_next_24" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
