@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -56,17 +57,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // loading activity
-        Intent intent = new Intent(this, LoadingActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, LoadingActivity.class);
+//        startActivity(intent);
 
         mySQLiteOpenHelper = new MySQLiteOpenHelper(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
-        // ContentProvider를 통해 외부의 음악파일을 가져와 저장
-        getMusicList();
-        //위젯들의 이벤트 처리
-        setWigetSetting();
-        //ViewPager2 화면에 붙이기
-        setViewPager2();
+        int checkPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if(checkPermission != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
+        }else{
+            getMusicList();
+            //위젯들의 이벤트 처리
+            setWigetSetting();
+            //ViewPager2 화면에 붙이기
+            setViewPager2();
+        }
+
     }
 
     private void startMusic(int position) {
@@ -152,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // 콜백 함수 overriding
+
     @Override
     public void onMusicSelected(ArrayList<MusicData> arrayList, int position) {
         if (index == -1 || !arrayList.get(position).getID().equals(this.arrayList.get(index).getID())) {
@@ -165,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawerLayout.openDrawer(drawer);
         }
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -339,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getMusicList() {
-//        mySQLiteOpenHelper.initTbl();
+        Log.d("메인 액티비티", "get MusicList");
         Cursor cursor = null;
         // 음원 파일 아이디, 앨범 아이디, 타이틀, 가수, 발매 년도
         String[] colums = new String[]{MediaStore.Audio.Media._ID,
@@ -349,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MediaStore.Audio.Media.YEAR};
 
         try {
+//            mySQLiteOpenHelper.initTbl();
             cursor = getContentResolver()
                     .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, colums, MediaStore.Audio.Media.DATA + " like ? ",
                             new String[]{"%mymusic%"}, MediaStore.Audio.Media.TITLE);
@@ -382,6 +388,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == MODE_PRIVATE){
+            Log.d("퍼미션", "허락받음");
+            mySQLiteOpenHelper.initTbl();
+            // ContentProvider를 통해 외부의 음악파일을 가져와 저장
+            getMusicList();
+            //위젯들의 이벤트 처리
+            setWigetSetting();
+            //ViewPager2 화면에 붙이기
+            setViewPager2();
         }
     }
 }

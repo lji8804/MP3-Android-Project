@@ -20,7 +20,8 @@ public class FavoriteFragment extends MyFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.favorite_fragment, container, false);
         fragmentHelper.selectTbl(arrayList, 2);
         RecyclerView recyclerView = view.findViewById(R.id.favorite_recycler_view);

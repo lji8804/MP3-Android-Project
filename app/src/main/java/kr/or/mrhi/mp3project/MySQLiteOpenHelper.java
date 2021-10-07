@@ -21,18 +21,34 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         Log.d("가수 데이터베이스", "MySQLiteOpenHelper 생성자");
     }
 
+
+    public boolean initTbl(){
+        SQLiteDatabase sqlDB = getWritableDatabase();
+        boolean flag = false;
+        try{
+            sqlDB = getWritableDatabase();
+            // 기존의 테이블을 지우고 새로운 테이블을 만든다
+            onUpgrade(sqlDB,1,2);
+            flag = true;
+        }catch (Exception e){
+            Log.d("가수 데이터베이스", "테이블 생성 오류" + e.toString());
+        }finally {
+            sqlDB.close();
+        }
+        return flag;
+    }
+
     // 테이블 생성 (테이블이 있다면 만들지 않는다)
     @Override
     public void onCreate(SQLiteDatabase sdb) {
         sdb.execSQL("create table musicTBL(" +
-                "ID char(50) primary Key," +
+                "ID char(50)," +
                 "AlbumID char(50)," +
                 "title char(20)," +
                 "artist char(10)," +
                 "year char(10)," +
                 "thumbUp boolean);");
         Log.d("가수 데이터베이스", "MySQLiteOpenHelper onCreate");
-
     }
 
     // 테이블 삭제하고 다시 만들기

@@ -19,7 +19,8 @@ public class AgeFragment extends MyFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.age_fragment, container, false);
         fragmentHelper.selectTbl(arrayList,1);
         RecyclerView recyclerView = view.findViewById(R.id.age_recycler_view);
